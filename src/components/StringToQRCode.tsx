@@ -1,8 +1,9 @@
-import { useStore } from "@nanostores/react";
+// import { useStore } from "@nanostores/react";
 import React, { useState } from "react";
-import { addNote, notes } from "../store";
+// import { addNote, notes } from "../store";
 import QRCode from "react-qr-code";
 import { domToPng } from "modern-screenshot";
+// import reactColorPkg from "react-color";
 import { ChromePicker } from "react-color";
 import Tippy from "@tippyjs/react";
 
