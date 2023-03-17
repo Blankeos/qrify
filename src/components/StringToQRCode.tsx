@@ -1,16 +1,16 @@
-// import { useStore } from "@nanostores/react";
 import React, { useState } from "react";
-// import { addNote, notes } from "../store";
 import QRCode from "react-qr-code";
 import { domToPng } from "modern-screenshot";
 import { ChromePicker } from "@hello-pangea/color-picker";
 import Tippy from "@tippyjs/react";
+// import { useStore } from "@nanostores/react";
+// import { addNote, notes } from "../store";
 
 const StringToQRCode = () => {
   const [fgColor, setFgColor] = useState<string>("#0073F5");
   const [bgColor, setBgColor] = useState<string>("#ffffff");
-  // const [userNote, setUserNote] = useState("");
   const [qrValue, setQRValue] = useState("https://carlo.vercel.app");
+  // const [userNote, setUserNote] = useState("");
   // const $notes = useStore(notes);
 
   async function handleDownloadClick() {
