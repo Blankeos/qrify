@@ -3,16 +3,15 @@ lockfileVersion: 5.4
 specifiers:
   '@astrojs/react': ^2.1.0
   '@astrojs/tailwind': ^3.1.1
+  '@hello-pangea/color-picker': ^3.2.2
   '@nanostores/react': ^0.4.1
   '@tippyjs/react': ^4.2.6
   '@types/react': ^18.0.21
-  '@types/react-color': ^3.0.6
   '@types/react-dom': ^18.0.6
   astro: ^2.1.3
   modern-screenshot: ^4.4.6
   nanostores: ^0.7.4
   react: ^18.0.0
-  react-color: ^2.19.3
   react-dom: ^18.0.0
   react-qr-code: ^2.0.11
   tailwindcss: ^3.0.24
@@ -21,6 +20,7 @@ specifiers:
 dependencies:
   '@astrojs/react': 2.1.0_3xleytyzprlgycb2ded54tx72i
   '@astrojs/tailwind': 3.1.1_2l4ywwlgzw2satesmi43zum3jy
+  '@hello-pangea/color-picker': 3.2.2_react@18.2.0
   '@nanostores/react': 0.4.1_nkfnbc2tpc77iht7asm3uqwau4
   '@tippyjs/react': 4.2.6_biqbaboplfbrettd7655fr4n2y
   '@types/react': 18.0.28
@@ -29,14 +29,10 @@ dependencies:
   modern-screenshot: 4.4.6
   nanostores: 0.7.4
   react: 18.2.0
-  react-color: 2.19.3_react@18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-qr-code: 2.0.11_react@18.2.0
   tailwindcss: 3.2.7
   tippy.js: 6.3.7
-
-devDependencies:
-  '@types/react-color': 3.0.6
 
 packages:
 
@@ -357,6 +353,13 @@ packages:
       '@babel/types': 7.21.3
     dev: false
 
+  /@babel/runtime/7.21.0:
+    resolution: {integrity: sha512-xwII0//EObnq89Ji5AKYQaRYiW/nZ3llSv29d49IuxPhKbtJoLP+9QUUZ4nVragQVtaVGeZrpB+ZtG/Pdy/POw==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      regenerator-runtime: 0.13.11
+    dev: false
+
   /@babel/template/7.20.7:
     resolution: {integrity: sha512-8SegXApWe6VoNw0r9JHpSteLKTpTiLZ4rMlGIm9JQ18KiCtyQiAMEazujAHrUS5flrcqYZa75ukev3P6QmUwUw==}
     engines: {node: '>=6.9.0'}
@@ -607,12 +610,16 @@ packages:
     dev: false
     optional: true
 
-  /@icons/material/0.2.4_react@18.2.0:
-    resolution: {integrity: sha512-QPcGmICAPbGLGb6F/yNf/KzKqvFx8z5qx3D1yFqVAjoFmXK35EgyW+cJ57Te3CNsmzblwtzakLGFqHPqrfb4Tw==}
+  /@hello-pangea/color-picker/3.2.2_react@18.2.0:
+    resolution: {integrity: sha512-1JIWv8zh9SVDXlfzlCtzdbsRElLWGX+Ljh5RYzJKigVFroycTToP/6I7qISoeQJr3B045Uq6sZXyE/F/cKmz3g==}
+    engines: {node: '>=14.6.0'}
     peerDependencies:
-      react: '*'
+      react: '>=16.8.0'
     dependencies:
+      '@babel/runtime': 7.21.0
+      lodash: 4.17.21
       react: 18.2.0
+      tinycolor2: 1.6.0
     dev: false
 
   /@jridgewell/gen-mapping/0.1.1:
@@ -795,13 +802,7 @@ packages:
 
   /@types/prop-types/15.7.5:
     resolution: {integrity: sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==}
-
-  /@types/react-color/3.0.6:
-    resolution: {integrity: sha512-OzPIO5AyRmLA7PlOyISlgabpYUa3En74LP8mTMa0veCA719SvYQov4WLMsHvCgXP+L+KI9yGhYnqZafVGG0P4w==}
-    dependencies:
-      '@types/react': 18.0.28
-      '@types/reactcss': 1.2.6
-    dev: true
+    dev: false
 
   /@types/react-dom/18.0.11:
     resolution: {integrity: sha512-O38bPbI2CWtgw/OoQoY+BRelw7uysmXbWvw3nLWO21H1HSh+GOlqPuXshJfjmpNlKiiSDG9cc1JZAaMmVdcTlw==}
@@ -815,12 +816,7 @@ packages:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
       csstype: 3.1.1
-
-  /@types/reactcss/1.2.6:
-    resolution: {integrity: sha512-qaIzpCuXNWomGR1Xq8SCFTtF4v8V27Y6f+b9+bzHiv087MylI/nTCqqdChNeWS7tslgROmYB7yeiruWX7WnqNg==}
-    dependencies:
-      '@types/react': 18.0.28
-    dev: true
+    dev: false
 
   /@types/resolve/1.20.2:
     resolution: {integrity: sha512-60BCwRFOZCQhDncwQdxxeOEEkbc5dIMccYLwbxsS4TUNeVECQ/pBJ0j09mrHOl/JJvpRPGwO9SvE4nR2Nb/a4Q==}
@@ -828,6 +824,7 @@ packages:
 
   /@types/scheduler/0.16.2:
     resolution: {integrity: sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==}
+    dev: false
 
   /@types/unist/2.0.6:
     resolution: {integrity: sha512-PBjIUxZHOuj0R15/xuwJYjFi+KZdNFrehocChv4g5hu6aFroHue8m0lBP0POdK2nKzbw0cgV1mws8+V/JAcEkQ==}
@@ -1239,6 +1236,7 @@ packages:
 
   /csstype/3.1.1:
     resolution: {integrity: sha512-DJR/VvkAvSZW9bTouZue2sSxDwdTN92uHjqeKVm+0dAqdfNykRzQ95tay8aXMBAAPpUiq4Qcug2L7neoRh2Egw==}
+    dev: false
 
   /debug/4.3.4:
     resolution: {integrity: sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==}
@@ -1852,10 +1850,6 @@ packages:
       p-locate: 5.0.0
     dev: false
 
-  /lodash-es/4.17.21:
-    resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
-    dev: false
-
   /lodash/4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
     dev: false
@@ -1901,10 +1895,6 @@ packages:
 
   /markdown-table/3.0.3:
     resolution: {integrity: sha512-Z1NL3Tb1M9wH4XESsCDEksWoKTdlUafKc4pt0GRwjUyXaCFZ+dc3g2erqB6zm3szA2IUSi7VnPI+o/9jnxh9hw==}
-    dev: false
-
-  /material-colors/1.2.6:
-    resolution: {integrity: sha512-6qE4B9deFBIa9YSpOc9O0Sgc43zTeVYbgDT5veRKSlB2+ZuHNoVVxA1L/ckMUayV9Ay9y7Z/SZCLcGteW9i7bg==}
     dev: false
 
   /mdast-util-definitions/5.1.2:
@@ -2674,21 +2664,6 @@ packages:
     engines: {node: '>=10'}
     dev: false
 
-  /react-color/2.19.3_react@18.2.0:
-    resolution: {integrity: sha512-LEeGE/ZzNLIsFWa1TMe8y5VYqr7bibneWmvJwm1pCn/eNmrabWDh659JSPn9BuaMpEfU83WTOJfnCcjDZwNQTA==}
-    peerDependencies:
-      react: '*'
-    dependencies:
-      '@icons/material': 0.2.4_react@18.2.0
-      lodash: 4.17.21
-      lodash-es: 4.17.21
-      material-colors: 1.2.6
-      prop-types: 15.8.1
-      react: 18.2.0
-      reactcss: 1.2.3_react@18.2.0
-      tinycolor2: 1.6.0
-    dev: false
-
   /react-dom/18.2.0_react@18.2.0:
     resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
     peerDependencies:
@@ -2724,15 +2699,6 @@ packages:
       loose-envify: 1.4.0
     dev: false
 
-  /reactcss/1.2.3_react@18.2.0:
-    resolution: {integrity: sha512-KiwVUcFu1RErkI97ywr8nvx8dNOpT03rbnma0SSalTYjkrPYaEajR4a/MRt6DZ46K6arDRbWMNHF+xH7G7n/8A==}
-    peerDependencies:
-      react: '*'
-    dependencies:
-      lodash: 4.17.21
-      react: 18.2.0
-    dev: false
-
   /read-cache/1.0.0:
     resolution: {integrity: sha512-Owdv/Ft7IjOgm/i0xvNDZ1LrRANRfew4b2prF3OWMQLxLfu3bS8FVhCsrSCMK4lR56Y9ya+AThoTpDCTxCmpRA==}
     dependencies:
@@ -2753,6 +2719,10 @@ packages:
     engines: {node: '>=8.10.0'}
     dependencies:
       picomatch: 2.3.1
+    dev: false
+
+  /regenerator-runtime/0.13.11:
+    resolution: {integrity: sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==}
     dev: false
 
   /rehype-parse/8.0.4:
