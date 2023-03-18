@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useRef } from "react";
+import { nanoid } from "nanoid";
 import QRCode from "react-qr-code";
-import { domToPng } from "modern-screenshot";
-import { ChromePicker } from "@hello-pangea/color-picker";
 import Tippy from "@tippyjs/react";
-// import { useStore } from "@nanostores/react";
+import { toPng } from "html-to-image";
 // import { addNote, notes } from "../store";
+// import { useStore } from "@nanostores/react";
+import { ChromePicker } from "@hello-pangea/color-picker";
 import { VscLoading as LoadingIcon } from "react-icons/vsc";
 
 const StringToQRCode = () => {
+  const qrRef = useRef<HTMLDivElement>(null);
   const [fgColor, setFgColor] = useState<string>("#0073F5");
   const [bgColor, setBgColor] = useState<string>("#ffffff");
   const [qrValue, setQRValue] = useState("https://carlo.vercel.app");
@@ -16,23 +18,27 @@ const StringToQRCode = () => {
   // const [userNote, setUserNote] = useState("");
   // const $notes = useStore(notes);
 
-  async function handleDownloadClick() {
-    setIsLoading(true);
-    const element = document.getElementById("qr-code");
-    if (!element) {
-      setIsLoading(false);
+  const handleDownloadClick = useCallback(() => {
+    if (qrRef.current === null) {
       return;
     }
 
-    const dataUrl = await domToPng(element, {
-      scale: 3,
-    });
-    const link = document.createElement("a");
-    link.download = "qr-code.png";
-    link.href = dataUrl;
-    link.click();
+    setIsLoading(true);
+
+    toPng(qrRef.current, { cacheBust: true })
+      .then((dataUrl) => {
+        const link = document.createElement("a");
+        link.download = `${nanoid(5)}.png`;
+        link.href = dataUrl;
+        link.click();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+
     setIsLoading(false);
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [qrRef]);
 
   return (
     <>
@@ -65,8 +71,8 @@ const StringToQRCode = () => {
           {/* QR CODE */}
           <div className="grid place-items-center">
             <div
+              ref={qrRef}
               className="p-5 rounded-xl"
-              id="qr-code"
               style={{
                 backgroundColor: bgColor,
               }}
