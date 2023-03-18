@@ -71,7 +71,13 @@ const StringToQRCode = () => {
                 backgroundColor: bgColor,
               }}
             >
-              <QRCode value={qrValue} fgColor={fgColor} bgColor={bgColor} />
+              <QRCode
+                value={qrValue}
+                fgColor={fgColor}
+                bgColor={bgColor}
+                bbox="2rem"
+                // ascent={}
+              />
             </div>
           </div>
           {/* QR CODE */}
