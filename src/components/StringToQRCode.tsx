@@ -5,17 +5,24 @@ import { ChromePicker } from "@hello-pangea/color-picker";
 import Tippy from "@tippyjs/react";
 // import { useStore } from "@nanostores/react";
 // import { addNote, notes } from "../store";
+import { VscLoading as LoadingIcon } from "react-icons/vsc";
 
 const StringToQRCode = () => {
   const [fgColor, setFgColor] = useState<string>("#0073F5");
   const [bgColor, setBgColor] = useState<string>("#ffffff");
   const [qrValue, setQRValue] = useState("https://carlo.vercel.app");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   // const [userNote, setUserNote] = useState("");
   // const $notes = useStore(notes);
 
   async function handleDownloadClick() {
+    setIsLoading(true);
     const element = document.getElementById("qr-code");
-    if (!element) return;
+    if (!element) {
+      setIsLoading(false);
+      return;
+    }
 
     const dataUrl = await domToPng(element, {
       scale: 3,
@@ -24,10 +31,14 @@ const StringToQRCode = () => {
     link.download = "qr-code.png";
     link.href = dataUrl;
     link.click();
+    setIsLoading(false);
   }
 
   return (
     <>
+      <p className="text-center mb-1.5 text-gray-600 font-normal">
+        Enter a link and see the QR Code Change
+      </p>
       <input
         className="border w-full p-2 mb-5"
         type="text"
@@ -36,9 +47,9 @@ const StringToQRCode = () => {
         placeholder="https://carlo.vercel.app/"
         onChange={(e) => setQRValue(e.target.value)}
       />
-      <div className="flex flex-col items-center gap-y-10">
-        <div className="grid grid-cols-[5rem,1fr,5rem] gap-x-2">
-          <div className="flex flex-col items-center gap-y-3">
+      <div className="flex flex-col items-center gap-y-5">
+        <div className="flex gap-2 justify-between w-full flex-col sm:flex-row">
+          <div className="flex justify-center gap-3 sm:flex-col sm:items-start sm:justify-start">
             {/* Color Picker */}
             <ColorPicker
               hoverContent="Foreground"
@@ -51,22 +62,41 @@ const StringToQRCode = () => {
               setColor={setBgColor}
             />
           </div>
-          <div
-            className="p-5 rounded-xl"
-            id="qr-code"
-            style={{
-              backgroundColor: bgColor,
-            }}
-          >
-            <QRCode value={qrValue} fgColor={fgColor} bgColor={bgColor} />
+          {/* QR CODE */}
+          <div className="grid place-items-center">
+            <div
+              className="p-5 rounded-xl"
+              id="qr-code"
+              style={{
+                backgroundColor: bgColor,
+              }}
+            >
+              <QRCode value={qrValue} fgColor={fgColor} bgColor={bgColor} />
+            </div>
           </div>
-          <div className=""></div>
+          {/* QR CODE */}
+          <div className="flex justify-center gap-3 sm:flex-col sm:items-start sm:justify-start">
+            <ColorPicker
+              hoverContent="nothing"
+              color="#000066"
+              setColor={() => null}
+            />
+          </div>
         </div>
         <button
+          disabled={isLoading}
           onClick={handleDownloadClick}
-          className="bg-gray-900 text-white py-2 px-20 rounded-md"
+          className="grid place-items-center bg-gray-900 text-white py-2 px-20 rounded-md disabled:opacity-50"
         >
-          Download
+          <span className={`${isLoading ? "opacity-0" : "opacity-100"}`}>
+            Download
+          </span>
+          <LoadingIcon
+            className={`animate-spin absolute ${
+              isLoading ? "opacity-100" : "opacity-0"
+            }`}
+            size="1.3rem"
+          />
         </button>
       </div>
     </>
