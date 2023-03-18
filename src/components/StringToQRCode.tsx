@@ -69,11 +69,6 @@ const StringToQRCode = () => {
           Download
         </button>
       </div>
-      {/* <ul>
-        {$notes.map((note, i) => (
-          <li key={i}>{note}</li>
-        ))}
-      </ul> */}
     </>
   );
 };
