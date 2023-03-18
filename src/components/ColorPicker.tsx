@@ -1,5 +1,4 @@
-// import { ChromePicker } from "@hello-pangea/color-picker";
-import { HexColorPicker } from "react-colorful";
+import { HexColorPicker, HexColorInput } from "react-colorful";
 import Tippy from "@tippyjs/react";
 
 interface IColorPickerProps {
@@ -21,13 +20,18 @@ export const ColorPicker: React.FC<IColorPickerProps> = ({
           trigger="click"
           arrow={false}
           content={
-            <div className="">
+            <div className="flex flex-col gap-y-2">
               <HexColorPicker color={color} onChange={setColor} />
-              {/* <ChromePicker
-                  disableAlpha={true}
+              <div className="flex overflow-hidden rounded-md">
+                <div className="bg-gray-500 h-8 w-8 grid place-items-center flex-shrink-0">
+                  #
+                </div>
+                <HexColorInput
+                  className="border text-gray-800 px-2 py-1 w-full outline-none"
                   color={color}
-                  onChange={(v) => setColor(v.hex)}
-                /> */}
+                  onChange={setColor}
+                />
+              </div>
             </div>
           }
         >

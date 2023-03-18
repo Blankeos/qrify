@@ -7,12 +7,24 @@ import { toPng } from "html-to-image";
 import { VscLoading as LoadingIcon } from "react-icons/vsc";
 import { ColorPicker } from "./ColorPicker";
 
+import MarginPicker from "./MarginPicker";
+
+// Icon
+import {
+  TbBoxMargin as PaddingIcon,
+  TbBorderRadius as BorderRadiusIcon,
+} from "react-icons/tb";
+
 const StringToQRCode = () => {
   const qrRef = useRef<HTMLDivElement>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  // Settings
   const [fgColor, setFgColor] = useState<string>("#0073F5");
   const [bgColor, setBgColor] = useState<string>("#ffffff");
   const [qrValue, setQRValue] = useState("https://carlo.vercel.app");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [paddingValue, setPaddingValue] = useState<number>(20);
+  const [borderRadiusValue, setBorderRadiusValue] = useState<number>(12);
 
   // const [userNote, setUserNote] = useState("");
   // const $notes = useStore(notes);
@@ -30,12 +42,13 @@ const StringToQRCode = () => {
         link.download = `${nanoid(5)}.png`;
         link.href = dataUrl;
         link.click();
+        setIsLoading(false);
       })
       .catch((err) => {
+        setIsLoading(false);
         console.error(err);
       });
 
-    setIsLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [qrRef]);
 
@@ -67,13 +80,15 @@ const StringToQRCode = () => {
               setColor={setBgColor}
             />
           </div>
-          {/* QR CODE */}
+          {/* START: QR CODE */}
           <div className="grid place-items-center">
             <div
               ref={qrRef}
-              className="p-5 rounded-xl"
+              className="rounded-xl"
               style={{
                 backgroundColor: bgColor,
+                padding: `${paddingValue}px`,
+                borderRadius: `${borderRadiusValue}px`,
               }}
             >
               <QRCode
@@ -85,13 +100,26 @@ const StringToQRCode = () => {
               />
             </div>
           </div>
-          {/* QR CODE */}
+          {/* END: QR CODE */}
           <div className="flex justify-center gap-3 sm:flex-col sm:items-start sm:justify-start">
-            <ColorPicker
-              hoverContent="nothing"
-              color="#000066"
-              setColor={() => null}
-            />
+            <MarginPicker
+              name="Padding"
+              value={paddingValue}
+              setValue={setPaddingValue}
+              max={50}
+              min={0}
+            >
+              <PaddingIcon size="2.5rem" className="text-gray-600" />
+            </MarginPicker>
+            <MarginPicker
+              name="Border Radius"
+              value={borderRadiusValue}
+              setValue={setBorderRadiusValue}
+              max={25}
+              min={0}
+            >
+              <BorderRadiusIcon size="2.5rem" className="text-gray-600" />
+            </MarginPicker>
           </div>
         </div>
         <button
