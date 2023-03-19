@@ -10,7 +10,7 @@ interface IRangePicker {
   children: React.ReactNode;
   setValue: (value: number) => any;
 }
-const MarginPicker: React.FC<IRangePicker> = ({
+const RangePicker: React.FC<IRangePicker> = ({
   name,
   max,
   min,
@@ -49,6 +49,6 @@ const MarginPicker: React.FC<IRangePicker> = ({
   );
 };
 
-export default MarginPicker;
+export default RangePicker;
 
 // TbBorderRadius

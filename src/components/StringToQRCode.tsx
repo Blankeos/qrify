@@ -7,7 +7,7 @@ import { toPng } from "html-to-image";
 import { VscLoading as LoadingIcon } from "react-icons/vsc";
 import { ColorPicker } from "./ColorPicker";
 
-import MarginPicker from "./MarginPicker";
+import RangePicker from "./RangePicker";
 
 // Icon
 import {
@@ -73,6 +73,7 @@ const StringToQRCode = () => {
               hoverContent="Foreground"
               color={fgColor}
               setColor={setFgColor}
+              enableAlpha={true}
             />
             <ColorPicker
               hoverContent="Background"
@@ -102,7 +103,7 @@ const StringToQRCode = () => {
           </div>
           {/* END: QR CODE */}
           <div className="flex justify-center gap-3 sm:flex-col sm:items-start sm:justify-start">
-            <MarginPicker
+            <RangePicker
               name="Padding"
               value={paddingValue}
               setValue={setPaddingValue}
@@ -110,8 +111,8 @@ const StringToQRCode = () => {
               min={0}
             >
               <PaddingIcon size="2.5rem" className="text-gray-600" />
-            </MarginPicker>
-            <MarginPicker
+            </RangePicker>
+            <RangePicker
               name="Border Radius"
               value={borderRadiusValue}
               setValue={setBorderRadiusValue}
@@ -119,7 +120,7 @@ const StringToQRCode = () => {
               min={0}
             >
               <BorderRadiusIcon size="2.5rem" className="text-gray-600" />
-            </MarginPicker>
+            </RangePicker>
           </div>
         </div>
         <button
