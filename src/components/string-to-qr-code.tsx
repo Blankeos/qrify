@@ -1,42 +1,38 @@
-import React, { useState, useCallback, useRef } from "react";
-import { nanoid } from "nanoid";
-import QRCode from "react-qr-code";
 import { toPng } from "html-to-image";
+import { nanoid } from "nanoid";
+import { createSignal } from "solid-js";
+import { QRCodeSVG as QrCode } from "solid-qr-code";
 // import { addNote, notes } from "../store";
 // import { useStore } from "@nanostores/react";
-import { VscLoading as LoadingIcon } from "react-icons/vsc";
-import { ColorPicker } from "./ColorPicker";
+import { ColorPicker } from "./color-picker";
 
-import RangePicker from "./RangePicker";
+import RangePicker from "./range-picker";
 
 // Icon
-import {
-  TbBoxMargin as PaddingIcon,
-  TbBorderRadius as BorderRadiusIcon,
-} from "react-icons/tb";
+import { IconBorderRadius, IconLoading, IconMargin } from "@/assets";
 
 const StringToQRCode = () => {
-  const qrRef = useRef<HTMLDivElement>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  let qrRef!: HTMLDivElement;
+  const [isLoading, setIsLoading] = createSignal<boolean>(false);
 
   // Settings
-  const [fgColor, setFgColor] = useState<string>("#0073F5");
-  const [bgColor, setBgColor] = useState<string>("#ffffff");
-  const [qrValue, setQRValue] = useState("https://carlo.vercel.app");
-  const [paddingValue, setPaddingValue] = useState<number>(20);
-  const [borderRadiusValue, setBorderRadiusValue] = useState<number>(12);
+  const [fgColor, setFgColor] = createSignal<string>("#0073F5");
+  const [bgColor, setBgColor] = createSignal<string>("#ffffff");
+  const [qrValue, setQRValue] = createSignal("https://carlo.vercel.app");
+  const [paddingValue, setPaddingValue] = createSignal<number>(20);
+  const [borderRadiusValue, setBorderRadiusValue] = createSignal<number>(12);
 
-  // const [userNote, setUserNote] = useState("");
+  // const [userNote, setUserNote] = createSignal("");
   // const $notes = useStore(notes);
 
-  const handleDownloadClick = useCallback(() => {
-    if (qrRef.current === null) {
+  const handleDownloadClick = () => {
+    if (qrRef === null) {
       return;
     }
 
     setIsLoading(true);
 
-    toPng(qrRef.current, { cacheBust: true })
+    toPng(qrRef, { cacheBust: true })
       .then((dataUrl) => {
         const link = document.createElement("a");
         link.download = `${nanoid(5)}.png`;
@@ -48,94 +44,94 @@ const StringToQRCode = () => {
         setIsLoading(false);
         console.error(err);
       });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [qrRef]);
+  };
 
   return (
     <>
-      <p className="text-center mb-1.5 text-gray-600 font-normal">
+      <p class="text-center mb-1.5 text-gray-600 font-normal">
         Enter a link and see the QR Code Change
       </p>
       <input
-        className="border w-full p-2 mb-5"
+        class="border w-full p-2 mb-5"
         type="text"
         name="qrValue"
         id="qrValue"
         placeholder="https://carlo.vercel.app/"
         onChange={(e) => setQRValue(e.target.value)}
       />
-      <div className="flex flex-col items-center gap-y-5">
-        <div className="flex gap-2 justify-between w-full flex-col sm:flex-row">
-          <div className="flex justify-center gap-3 sm:flex-col sm:items-start sm:justify-start">
+      <div class="flex flex-col items-center gap-y-5">
+        <div class="flex gap-2 justify-between w-full flex-col sm:flex-row">
+          <div class="flex justify-center gap-3 sm:flex-col sm:items-start sm:justify-start">
             {/* Color Picker */}
             <ColorPicker
               hoverContent="Foreground"
-              color={fgColor}
+              color={fgColor()}
               setColor={setFgColor}
               enableAlpha={true}
             />
             <ColorPicker
               hoverContent="Background"
-              color={bgColor}
+              color={bgColor()}
               setColor={setBgColor}
             />
           </div>
           {/* START: QR CODE */}
-          <div className="grid place-items-center">
+          <div class="grid place-items-center">
             <div
               ref={qrRef}
-              className="rounded-xl"
+              class="rounded-xl"
               style={{
-                backgroundColor: bgColor,
-                padding: `${paddingValue}px`,
-                borderRadius: `${borderRadiusValue}px`,
+                "background-color": bgColor(),
+                padding: `${paddingValue()}px`,
+                "border-radius": `${borderRadiusValue()}px`,
               }}
             >
-              <QRCode
-                value={qrValue}
-                fgColor={fgColor}
-                bgColor={bgColor}
-                bbox="2rem"
-                // ascent={}
+              <QrCode
+                value={qrValue()}
+                backgroundColor={bgColor()}
+                backgroundAlpha={0}
+                foregroundAlpha={0}
+                foregroundColor={fgColor()}
+                height={20}
+                level={"low"}
+                width={20}
               />
             </div>
           </div>
           {/* END: QR CODE */}
-          <div className="flex justify-center gap-3 sm:flex-col sm:items-start sm:justify-start">
+          <div class="flex justify-center gap-3 sm:flex-col sm:items-start sm:justify-start">
             <RangePicker
               name="Padding"
-              value={paddingValue}
+              value={paddingValue()}
               setValue={setPaddingValue}
               max={50}
               min={0}
             >
-              <PaddingIcon size="2.5rem" className="text-gray-600" />
+              <IconMargin class="text-gray-600 w-[2.5rem]" />
             </RangePicker>
             <RangePicker
               name="Border Radius"
-              value={borderRadiusValue}
+              value={borderRadiusValue()}
               setValue={setBorderRadiusValue}
               max={25}
               min={0}
             >
-              <BorderRadiusIcon size="2.5rem" className="text-gray-600" />
+              <IconBorderRadius class="text-gray-600 w-[2.5rem]" />
             </RangePicker>
           </div>
         </div>
         <button
-          disabled={isLoading}
+          disabled={isLoading()}
           onClick={handleDownloadClick}
-          className="grid place-items-center bg-gray-900 text-white py-2 px-20 rounded-md disabled:opacity-50"
+          class="grid place-items-center bg-gray-900 text-white py-2 px-20 rounded-md disabled:opacity-50"
         >
-          <span className={`${isLoading ? "opacity-0" : "opacity-100"}`}>
+          <span class={`${isLoading() ? "opacity-0" : "opacity-100"}`}>
             Download
           </span>
-          <LoadingIcon
-            className={`animate-spin absolute ${
-              isLoading ? "opacity-100" : "opacity-0"
+          <IconLoading
+            class={`animate-spin absolute w-[1.3rem] ${
+              isLoading() ? "opacity-100" : "opacity-0"
             }`}
-            size="1.3rem"
           />
         </button>
       </div>

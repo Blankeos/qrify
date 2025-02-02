@@ -1,4 +1,3 @@
-
 // interface IColorPickerProps {
 //   hoverContent: string;
 //   color: string;
@@ -47,20 +46,20 @@
 //       </Tippy>
 //     </div>
 //   );
-};
+// };
 
-import { createSignal } from 'solid-js'
-import { ColorPicker as ArkColorPicker, parseColor } from '@ark-ui/solid/dist/components/color-picker';
+import { ColorPicker as ArkColorPicker, parseColor } from "@ark-ui/solid/color-picker";
+import { createSignal } from "solid-js";
 
 type ColorPickerProps = {
   hoverContent: string;
   color: string;
   setColor: (color: string) => any;
   enableAlpha?: boolean;
-}
+};
 
-export function ColorPickasd(props: ColorPickerProps) {
-  const [color, setColor] = createSignal(parseColor('hsl(0, 100%, 50%)'))
+export function ColorPicker(props: ColorPickerProps) {
+  const [color, setColor] = createSignal(parseColor("hsl(0, 100%, 50%)"));
 
   return (
     <ArkColorPicker.Root
@@ -124,5 +123,5 @@ export function ColorPickasd(props: ColorPickerProps) {
       </ArkColorPicker.Positioner>
       <ArkColorPicker.HiddenInput />
     </ArkColorPicker.Root>
-  )
+  );
 }
