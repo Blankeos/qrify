@@ -17,15 +17,12 @@ export interface TippyOptions {
   props?: Partial<Props>;
 }
 
-export function tippy<T extends Element>(
-  target: T,
-  opts: () => TippyOptions | undefined,
-): void {
+export function tippy<T extends Element>(target: T, opts: () => TippyOptions | undefined): void {
   createEffect(() => {
     const options = opts();
     const instance = makeTippy(
       target,
-      untrack(() => options?.props),
+      untrack(() => options?.props)
     );
 
     createComputed(() => {
@@ -58,13 +55,13 @@ export function tippy<T extends Element>(
 
 export function tippyHeadless<T extends Element>(
   target: T,
-  opts: () => TippyOptions | undefined,
+  opts: () => TippyOptions | undefined
 ): void {
   createEffect(() => {
     const options = opts();
     const instance = makeHeadlessTippy(
       target,
-      untrack(() => options?.props),
+      untrack(() => options?.props)
     );
 
     createComputed(() => {
@@ -97,7 +94,7 @@ export function tippyHeadless<T extends Element>(
 
 export function useTippy<T extends Element>(
   target: () => T | undefined | null,
-  options?: TippyOptions,
+  options?: TippyOptions
 ): () => Instance | undefined {
   const [current, setCurrent] = createSignal<Instance>();
 
@@ -106,7 +103,7 @@ export function useTippy<T extends Element>(
     if (currentTarget) {
       const instance = makeTippy(
         currentTarget,
-        untrack(() => options?.props),
+        untrack(() => options?.props)
       );
 
       setCurrent(instance);
@@ -144,7 +141,7 @@ export function useTippy<T extends Element>(
 
 export function useTippyHeadless<T extends Element>(
   target: () => T | undefined | null,
-  options?: TippyOptions,
+  options?: TippyOptions
 ): () => Instance | undefined {
   const [current, setCurrent] = createSignal<Instance>();
 
@@ -153,7 +150,7 @@ export function useTippyHeadless<T extends Element>(
     if (currentTarget) {
       const instance = makeHeadlessTippy(
         currentTarget,
-        untrack(() => options?.props),
+        untrack(() => options?.props)
       );
 
       setCurrent(instance);

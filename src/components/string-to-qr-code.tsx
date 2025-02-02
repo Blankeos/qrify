@@ -1,7 +1,6 @@
 import { toPng } from "html-to-image";
 import { nanoid } from "nanoid";
 import { createSignal } from "solid-js";
-import { QRCodeSVG as QrCode } from "solid-qr-code";
 // import { addNote, notes } from "../store";
 // import { useStore } from "@nanostores/react";
 import { ColorPicker } from "./color-picker";
@@ -10,6 +9,7 @@ import RangePicker from "./range-picker";
 
 // Icon
 import { IconBorderRadius, IconLoading, IconMargin } from "@/assets";
+import { QRCode } from "./qrcode";
 
 const StringToQRCode = () => {
   let qrRef!: HTMLDivElement;
@@ -48,11 +48,11 @@ const StringToQRCode = () => {
 
   return (
     <>
-      <p class="text-center mb-1.5 text-gray-600 font-normal">
+      <p class="mb-1.5 text-center font-normal text-gray-600">
         Enter a link and see the QR Code Change
       </p>
       <input
-        class="border w-full p-2 mb-5"
+        class="mb-5 w-full rounded-md border border-gray-300 bg-white p-2"
         type="text"
         name="qrValue"
         id="qrValue"
@@ -60,7 +60,7 @@ const StringToQRCode = () => {
         onChange={(e) => setQRValue(e.target.value)}
       />
       <div class="flex flex-col items-center gap-y-5">
-        <div class="flex gap-2 justify-between w-full flex-col sm:flex-row">
+        <div class="flex w-full flex-col justify-between gap-2 sm:flex-row">
           <div class="flex justify-center gap-3 sm:flex-col sm:items-start sm:justify-start">
             {/* Color Picker */}
             <ColorPicker
@@ -69,11 +69,7 @@ const StringToQRCode = () => {
               setColor={setFgColor}
               enableAlpha={true}
             />
-            <ColorPicker
-              hoverContent="Background"
-              color={bgColor()}
-              setColor={setBgColor}
-            />
+            <ColorPicker hoverContent="Background" color={bgColor()} setColor={setBgColor} />
           </div>
           {/* START: QR CODE */}
           <div class="grid place-items-center">
@@ -86,16 +82,7 @@ const StringToQRCode = () => {
                 "border-radius": `${borderRadiusValue()}px`,
               }}
             >
-              <QrCode
-                value={qrValue()}
-                backgroundColor={bgColor()}
-                backgroundAlpha={0}
-                foregroundAlpha={0}
-                foregroundColor={fgColor()}
-                height={20}
-                level={"low"}
-                width={20}
-              />
+              <QRCode value={qrValue()} bg={bgColor()} fg={fgColor()} />
             </div>
           </div>
           {/* END: QR CODE */}
@@ -107,7 +94,7 @@ const StringToQRCode = () => {
               max={50}
               min={0}
             >
-              <IconMargin class="text-gray-600 w-[2.5rem]" />
+              <IconMargin class="w-[2.5rem] text-gray-600" />
             </RangePicker>
             <RangePicker
               name="Border Radius"
@@ -116,22 +103,18 @@ const StringToQRCode = () => {
               max={25}
               min={0}
             >
-              <IconBorderRadius class="text-gray-600 w-[2.5rem]" />
+              <IconBorderRadius class="w-[2.5rem] text-gray-600" />
             </RangePicker>
           </div>
         </div>
         <button
           disabled={isLoading()}
           onClick={handleDownloadClick}
-          class="grid place-items-center bg-gray-900 text-white py-2 px-20 rounded-md disabled:opacity-50"
+          class="grid place-items-center rounded-md bg-gray-900 px-20 py-2 text-white disabled:opacity-50"
         >
-          <span class={`${isLoading() ? "opacity-0" : "opacity-100"}`}>
-            Download
-          </span>
+          <span class={`${isLoading() ? "opacity-0" : "opacity-100"}`}>Download</span>
           <IconLoading
-            class={`animate-spin absolute w-[1.3rem] ${
-              isLoading() ? "opacity-100" : "opacity-0"
-            }`}
+            class={`absolute w-[1.3rem] animate-spin ${isLoading() ? "opacity-100" : "opacity-0"}`}
           />
         </button>
       </div>

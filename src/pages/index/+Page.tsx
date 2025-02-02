@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <>
       <div class="flex min-h-screen flex-col bg-gray-100">
-        <nav class="grid h-32 place-items-center border-b">
+        <nav class="grid h-32 place-items-center border-b border-gray-300">
           <div class="flex flex-col items-center gap-y-1">
             <h1 class="text-4xl font-black text-gray-900">Qrify</h1>
             <p class="text-gray-500">Dead-simple String to QR Code</p>

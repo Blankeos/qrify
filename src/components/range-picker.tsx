@@ -1,4 +1,6 @@
 import { FlowProps, JSX } from "solid-js";
+import { Popover } from "./popover";
+import { Slider } from "./slider";
 import { Tippy } from "./solid-tippy";
 
 type RangePickerProps = {
@@ -11,35 +13,34 @@ type RangePickerProps = {
 };
 export function RangePicker(props: FlowProps<RangePickerProps>) {
   return (
-    <Tippy props={{ content: props.name }}>
-      <Tippy
-        props={{
-          theme: "transparent",
-
-          interactive: true,
-          trigger: "click",
-          arrow: false,
-          content: (
-            <div class="bg-gray-50 rounded px-5 py-5 text-gray-800 flex flex-col gap-y-3 border">
+    <Tippy props={{ content: props.name, trigger: "mouseenter" }}>
+      <Popover
+        contentClass="min-w-[300px]"
+        content={() => {
+          return (
+            <div class="flex flex-col gap-y-3 px-5 py-5 text-gray-800">
               <p class="font-medium text-gray-600">
                 {props.name}: {props.value}
               </p>
-              {/* <ReactSlider
-                min={min}
-                max={max}
-                value={value}
-                onChange={setValue}
-                class="flex items-center bg-white h-2 w-52 border rounded-full"
-                thumbClassName="bg-white w-5 h-5 rounded-full grid place-items-center border-2 border-gray-500 cursor-grab active:cursor-grabbing"
-              /> */}
+              <Slider
+                min={props.min}
+                max={props.max}
+                value={props.value}
+                onValueChange={(details) => {
+                  const val = details.value.at(0);
+                  if (val !== undefined) {
+                    props.setValue(val);
+                  }
+                }}
+              />
             </div>
-          ),
+          );
         }}
       >
-        <div class="h-16 w-16 border rounded-md grid place-items-center cursor-pointer bg-white">
+        <div class="grid h-16 w-16 cursor-pointer place-items-center rounded-md border bg-white">
           {props.children}
         </div>
-      </Tippy>
+      </Popover>
     </Tippy>
   );
 }
