@@ -16,7 +16,7 @@ export function Slider(props: VoidProps<SliderProps>) {
       onValueChange={props.onValueChange}
     >
       {/* <ArkSlider.Label class="text-sm font-medium text-gray-700">Label</ArkSlider.Label> */}
-      <ArkSlider.ValueText class="text-sm text-gray-600" />
+      {/* <ArkSlider.ValueText class="text-sm text-gray-600" /> */}
       <ArkSlider.Control class="mt-2 flex items-center">
         <ArkSlider.Track class="h-2 w-full rounded-full bg-gray-200">
           <ArkSlider.Range class="h-full rounded-full bg-blue-500" />

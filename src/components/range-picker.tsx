@@ -13,7 +13,7 @@ type RangePickerProps = {
 };
 export function RangePicker(props: FlowProps<RangePickerProps>) {
   return (
-    <Tippy props={{ content: props.name, trigger: "mouseenter" }}>
+    <Tippy props={{ trigger: "mouseenter" }} content={props.name}>
       <Popover
         contentClass="min-w-[300px]"
         content={() => {
