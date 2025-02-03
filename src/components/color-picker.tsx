@@ -1,5 +1,5 @@
 import { IconColorPicker } from "@/assets";
-import { ColorPicker as ArkColorPicker, parseColor } from "@ark-ui/solid/color-picker";
+import { ColorPicker as ArkColorPicker } from "@ark-ui/solid/color-picker";
 import { Show } from "solid-js";
 import { Tippy } from "./solid-tippy";
 
@@ -17,11 +17,10 @@ export function ColorPicker(props: ColorPickerProps) {
     <>
       <Tippy props={{ content: props.hoverContent }}>
         <ArkColorPicker.Root
-          value={parseColor(props.color)}
+          // value={parseColor(props.color)}
           onValueChange={(e) => {
-            props.setColor(e.value.toString("hex"));
+            // props.setColor(e.value.toString("hex"));
           }}
-          onValueChangeEnd={(e: any) => console.log(e.valueAsString)}
           class="flex flex-col gap-4"
         >
           <ArkColorPicker.Control class="flex items-center gap-2">

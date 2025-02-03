@@ -36,6 +36,7 @@
     "@types/qrcode": "^1.5.5",
     "@typescript-eslint/eslint-plugin": "^8.22.0",
     "@typescript-eslint/parser": "^8.22.0",
+    "@vercel/node": "^5.1.0",
     "eslint": "^9.19.0",
     "eslint-plugin-solid": "^0.14.5",
     "prettier": "^3.4.2",
