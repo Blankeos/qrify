@@ -25,3 +25,7 @@ Some improvements:
 ### License
 
 GNU GPLv3
+
+TODO:
+
+- Replace QRCode (bad perf with `qrcode` I think https://github.com/rosskhanas/react-qr-code is better or @intosoft/qrcode)
