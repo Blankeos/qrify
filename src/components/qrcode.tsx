@@ -1,4 +1,4 @@
-import * as QRCodeLib from "qrcode";
+import { generateSVGString } from "@intosoft/qrcode";
 import { createEffect, VoidProps } from "solid-js";
 
 type QRCodeProps = {
@@ -8,24 +8,39 @@ type QRCodeProps = {
 };
 
 export function QRCode(props: VoidProps<QRCodeProps>) {
-  let qrCanvasRef!: HTMLCanvasElement;
+  let qrCanvasRef!: SVGSVGElement;
 
   createEffect(() => {
-    QRCodeLib.toCanvas(
-      qrCanvasRef,
-      props.value,
-      {
-        color: {
-          dark: props.fg, // fg
-          light: props.bg, // bg
+    const svgString = generateSVGString({
+      value: props.value,
+      colors: {
+        background: props.bg ?? "black",
+        body: props.fg ?? "black",
+        eyeFrame: {
+          bottomLeft: props.fg ?? "black",
+          topLeft: props.fg ?? "black",
+          topRight: props.fg ?? "black",
         },
-        margin: 0,
-        scale: 10,
+        eyeball: {
+          bottomLeft: props.fg ?? "black",
+          topLeft: props.fg ?? "black",
+          topRight: props.fg ?? "black",
+        },
       },
-      function (error: any) {
-        if (error) console.error(error);
-      }
-    );
+      length: 24,
+      padding: 0,
+      shapes: {
+        body: "square",
+        eyeFrame: "body",
+        eyeball: "body",
+      },
+      errorCorrectionLevel: "medium",
+    });
+
+    qrCanvasRef.innerHTML = svgString.toString();
   });
-  return <canvas class="" ref={qrCanvasRef} />;
+
+  return (
+    <svg ref={qrCanvasRef} viewBox="0 0 24 24" width="32" height="32" class="h-[250px] w-[250px]" />
+  );
 }
