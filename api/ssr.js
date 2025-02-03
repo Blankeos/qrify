@@ -28,7 +28,7 @@
 //   res.end(body);
 // }
 import { handle } from "hono/vercel";
-import { app } from "../src/server/server.js";
+import { app } from "../dist-server/server/server.js";
 // import { handle } from "@hono/node-server/vercel"; (When using NextJS)
 
 export default handle(app);
