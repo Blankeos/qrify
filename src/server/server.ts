@@ -63,3 +63,4 @@ export default {
   port: privateConfig.PORT,
   fetch: app.fetch,
 };
+export { app };

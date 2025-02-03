@@ -36,7 +36,6 @@ export default defineConfig({
     }),
     vike({}),
     vikeSolid(),
-    // solidPlugin(),
     tailwindcss(),
     solidSvg(),
   ],
