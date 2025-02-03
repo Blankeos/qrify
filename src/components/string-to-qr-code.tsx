@@ -57,7 +57,7 @@ const StringToQRCode = () => {
         name="qrValue"
         id="qrValue"
         placeholder="https://carlo.vercel.app/"
-        onChange={(e) => setQRValue(e.target.value)}
+        onInput={(e) => setQRValue(e.target.value)}
       />
       <div class="flex flex-col items-center gap-y-5">
         <div class="flex w-full flex-col justify-between gap-2 sm:flex-row">
@@ -107,16 +107,19 @@ const StringToQRCode = () => {
             </RangePicker>
           </div>
         </div>
-        <button
-          disabled={isLoading()}
-          onClick={handleDownloadClick}
-          class="grid place-items-center rounded-md bg-gray-900 px-20 py-2 text-white disabled:opacity-50"
-        >
-          <span class={`${isLoading() ? "opacity-0" : "opacity-100"}`}>Download</span>
-          <IconLoading
-            class={`absolute w-[1.3rem] animate-spin ${isLoading() ? "opacity-100" : "opacity-0"}`}
-          />
-        </button>
+
+        <div class="flex gap-x-2">
+          <button
+            disabled={isLoading()}
+            onClick={handleDownloadClick}
+            class="grid place-items-center rounded-md bg-gray-900 px-20 py-2 text-white disabled:opacity-50"
+          >
+            <span class={`${isLoading() ? "opacity-0" : "opacity-100"}`}>Download</span>
+            <IconLoading
+              class={`absolute w-[1.3rem] animate-spin ${isLoading() ? "opacity-100" : "opacity-0"}`}
+            />
+          </button>
+        </div>
       </div>
     </>
   );

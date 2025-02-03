@@ -1,12 +1,12 @@
 import {
-  children,
-  createComputed,
-  createEffect,
-  createSignal,
-  JSX,
-  onCleanup,
-  splitProps,
-  untrack,
+    children,
+    createComputed,
+    createEffect,
+    createSignal,
+    JSX,
+    onCleanup,
+    splitProps,
+    untrack,
 } from "solid-js";
 import makeTippy, { Instance, Props } from "tippy.js";
 import makeHeadlessTippy from "tippy.js/headless";
@@ -139,6 +139,10 @@ export function useTippy<T extends Element>(
   return () => current();
 }
 
+// ===========================================================================
+// Derived
+// ===========================================================================
+
 export function useTippyHeadless<T extends Element>(
   target: () => T | undefined | null,
   options?: TippyOptions
@@ -186,16 +190,30 @@ export function useTippyHeadless<T extends Element>(
   return () => current();
 }
 
-export function Tippy(props: TippyOptions & { children: JSX.Element }) {
-  const [_props, tippyOptions] = splitProps(props, ["children"]);
+type CustomTippyOptions = {
+  disabled?: boolean;
+  hidden?: boolean;
+  content?: string | JSX.Element;
+  props?: Omit<Partial<Props>, "content">;
+};
+
+export function Tippy(props: CustomTippyOptions & { children: JSX.Element }) {
+  const [_props, tippyOptions] = splitProps(props, ["children", "props", "content"]);
+  const [_, tippyProps] = splitProps(_props, ["content", "children"]);
 
   const _children = children(() => props.children);
+  const _content = children(() => props.content);
 
   const [ref, setRef] = createSignal<HTMLSpanElement>();
 
   useTippy(ref, {
     hidden: true,
     ...tippyOptions,
+    props: {
+      // eslint-disable-next-line solid/reactivity
+      ...tippyProps.props,
+      content: _content as unknown as Element,
+    },
   });
 
   createEffect(() => {
@@ -203,5 +221,17 @@ export function Tippy(props: TippyOptions & { children: JSX.Element }) {
     setRef(child as HTMLElement);
   });
 
-  return _children();
+  return (
+    <>
+      {_children()}
+      {/* This element here is only to avoid hydration errors.
+        It mimics what is being rendered by `content: _content as unknown as Element`.
+        Idk what weird hack I figured out here, but it works!
+        It doesn't get rendered actually.
+        */}
+      <span aria-hidden style={{ display: "none" }}>
+        {_content()}
+      </span>
+    </>
+  );
 }
