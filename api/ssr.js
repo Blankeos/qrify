@@ -29,6 +29,11 @@
 // }
 import { handle } from "hono/vercel";
 import { app } from "../dist-server/server/server.js";
-// import { handle } from "@hono/node-server/vercel"; (When using NextJS)
 
-export default handle(app);
+const handler = handle(app);
+
+export const GET = handler;
+export const POST = handler;
+export const PATCH = handler;
+export const PUT = handler;
+export const OPTIONS = handler;

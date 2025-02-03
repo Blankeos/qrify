@@ -1,6 +1,6 @@
 import { privateConfig } from "../config.private.js";
 import { Hono } from "hono";
-import { serveStatic } from "@hono/node-server/serve-static";
+// import { serveStatic } from "@hono/node-server/serve-static";
 import { renderPage } from "vike/server";
 import { appRouter } from "./_app.js";
 const app = new Hono();
@@ -10,11 +10,14 @@ app.get("/up", async (c) => {
 });
 // For the Backend APIs
 app.route("/api/*", appRouter);
-if (privateConfig.NODE_ENV === "production") {
-    app.use("/*", serveStatic({
-        root: `./dist/client/`,
-    }));
-}
+// if (privateConfig.NODE_ENV === "production") {
+//   app.use(
+//     "/*",
+//     serveStatic({
+//       root: `./dist/client/`,
+//     })
+//   );
+// }
 // For the Frontend + SSR
 app.get("*", async (c, next) => {
     const pageContextInit = {
@@ -43,8 +46,8 @@ app.onError((_, c) => {
     }, 500);
 });
 console.log("Running at http://localhost:" + privateConfig.PORT);
-export default {
-    port: privateConfig.PORT,
-    fetch: app.fetch,
-};
+// export default {
+//   port: privateConfig.PORT,
+//   fetch: app.fetch,
+// };
 export { app };

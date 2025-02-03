@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "bunx --bun vite --host",
-    "devv": "vercel",
+    "devv": "vercel dev",
     "build-node": "tsc --build ./tsconfig.build.json && tsc-alias --project ./tsconfig.build.json",
     "build": "vite build && bun run build-node",
     "preview": "NODE_ENV=production bun run ./server.ts",

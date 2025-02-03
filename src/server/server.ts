@@ -59,8 +59,8 @@ app.onError((_, c) => {
 
 console.log("Running at http://localhost:" + privateConfig.PORT);
 
-export default {
-  port: privateConfig.PORT,
-  fetch: app.fetch,
-};
+// export default {
+//   port: privateConfig.PORT,
+//   fetch: app.fetch,
+// };
 export { app };
