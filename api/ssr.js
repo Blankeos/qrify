@@ -27,8 +27,8 @@
 //   headers.forEach(([name, value]) => res.setHeader(name, value));
 //   res.end(body);
 // }
-import { app } from "@/server/server";
 import { handle } from "hono/vercel";
+import { app } from "../src/server/server.js";
 // import { handle } from "@hono/node-server/vercel"; (When using NextJS)
 
 export default handle(app);
