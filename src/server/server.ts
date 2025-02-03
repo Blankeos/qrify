@@ -2,7 +2,7 @@ import { privateConfig } from "@/config.private";
 
 import { Hono } from "hono";
 
-import { serveStatic } from "hono/bun";
+import { serveStatic } from "@hono/node-server/serve-static";
 import { renderPage } from "vike/server";
 import { appRouter } from "./_app";
 
