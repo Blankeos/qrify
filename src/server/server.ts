@@ -2,7 +2,7 @@ import { privateConfig } from "@/config.private";
 
 import { Hono } from "hono";
 
-import { serveStatic } from "@hono/node-server/serve-static";
+// import { serveStatic } from "@hono/node-server/serve-static";
 import { renderPage } from "vike/server";
 import { appRouter } from "./_app";
 
@@ -16,14 +16,14 @@ app.get("/up", async (c) => {
 // For the Backend APIs
 app.route("/api/*", appRouter);
 
-if (privateConfig.NODE_ENV === "production") {
-  app.use(
-    "/*",
-    serveStatic({
-      root: `./dist/client/`,
-    })
-  );
-}
+// if (privateConfig.NODE_ENV === "production") {
+//   app.use(
+//     "/*",
+//     serveStatic({
+//       root: `./dist/client/`,
+//     })
+//   );
+// }
 
 // For the Frontend + SSR
 app.get("*", async (c, next) => {
